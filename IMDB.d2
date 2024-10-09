@@ -1,0 +1,75 @@
+name_basics: {
+  shape: sql_table
+  nconst: string {constraint: primary_key}
+  primaryName: string
+  birthYear: int
+  deathYear: int
+  primaryProfession: array(string)
+  knownForTitles: array(string)
+}
+
+title_akas: {
+  shape: sql_table
+  titleId: string {constraint: primary_key}
+  ordering: int
+  title: string
+  region: string
+  language: string
+  types: array(string)
+  attributes: array(string)
+  isOriginalTitle: bool
+}
+
+title_basics: {
+  shape: sql_table
+  tconst: string {constraint: primary_key}
+  titleType: string
+  primaryTitle: string
+  originalTitle: string
+  isAdult: bool
+  startYear: int
+  endYear: string
+  runtimeMinutes: int
+  genres: array(string)
+}
+
+title_crew: {
+  shape: sql_table
+  tconst: string {constraint: foreign_key}
+  directors: array(string)
+  writers: array(string)
+}
+
+title_episode: {
+  shape: sql_table
+  tconst: string {constraint: foreign_key}
+  parentTconst: string {constraint: foreign_key}
+  seasonNumber: int
+  episodeNumber: int
+}
+
+title_principal: {
+  shape: sql_table
+  tconst: string {constraint: foreign_key}
+  ordering: int
+  nconst: string {constraint: foreign_key}
+  category: string
+  job: string
+  characters: string
+}
+
+title_ratings: {
+  shape: sql_table
+  tconst: string {constraint: foreign_key}
+  averageRating: float
+  numVotes: int
+}
+
+# Connection
+title_crew.tconst -> title_basics.tconst
+title_episode.tconst -> title_basics.tconst
+title_episode.parentTconst -> title_basics.tconst
+title_principal.tconst -> title_basics.tconst
+title_ratings.tconst -> title_basics.tconst
+title_akas.tconst -> title_basics.tconst
+title_principal.nconst -> name_basics.nconst
