@@ -16,4 +16,8 @@ echo 'x -> y' > input.d2
 d2 -w input.d2 out.svg # watch
 
 d2 fmt file.d2
+
+d2 IMDB.d2 out.png
 ```
+
+https://app.terrastruct.com/diagrams/1611584006

@@ -1,0 +1,11 @@
+title_akas: {
+  shape: sql_table
+  titleId: string {constraint: primary_key}
+  ordering: int
+  title: string
+  region: string
+  language: string
+  types: array(string)
+  attributes: array(string)
+  isOriginalTitle: bool
+}
