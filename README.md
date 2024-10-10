@@ -17,7 +17,8 @@ d2 -w input.d2 out.svg # watch
 
 d2 fmt file.d2
 
-d2 IMDB.d2 out.png
+d2 --sketch imdb.d2 imdb.png
+d2 --sketch imdb_d2/connections.d2 imdb.png
 ```
 
 https://app.terrastruct.com/diagrams/1611584006
