@@ -49,17 +49,17 @@ top_10_movies: {
   label: "Top 10 Movies"
 }
 
-task2a_join: {
+task2a.join: {
   shape: rectangle
   label: "Join: top_10_movies & title_principals"
 }
 
-task2a_aggregate: {
+task2a.aggregate: {
   shape: rectangle
   label: "Group by nconst"
 }
 
-task2a_most_credited: {
+task2a.most_credited: {
   shape: rectangle
   label: "Find most credited"
 }
@@ -70,12 +70,12 @@ most_credited_person: {
 }
 
 # Task 2b: Alternative Titles
-task2b_join: {
+task2b.join: {
   shape: rectangle
   label: "Join: top_10_movies & title_akas"
 }
 
-task2b_aggregate: {
+task2b.aggregate: {
   shape: rectangle
   label: "Collect alternative titles"
 }
@@ -96,6 +96,7 @@ task1.filter_500up -> task1.inner_join: inner join
 task1.inner_join -> task1.ranking: withColumn
 task1.ranking -> top_10_movies: top 10 order_by ranking
 
+# task2a
 top_10_movies -> task2a.join
 title_principals_cleansed_table -> task2a.join
 task2a.join -> task2a.aggregate: groupBy
@@ -105,10 +106,6 @@ name_basics_cleansed_table -> task2a.most_credited
 
 # task2b
 top_10_movies -> task2b.join
-title_akas_sdf: {
-  shape: cylinder
-  label: "title_akas"
-}
-title_akas_sdf -> task2b.join
+title_akas_cleansed_table -> task2b.join
 task2b.join -> task2b.aggregate: collect
 task2b.aggregate -> top_10_movies_with_alternatives: result
