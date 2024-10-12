@@ -49,6 +49,12 @@ top_10_movies: {
   label: "Top 10 Movies"
 }
 
+top_10_movies_copy: {
+  shape: cylinder
+  style.stroke-dash: 3
+  label: "Top 10 Movies"
+}
+
 task2a.join: {
   shape: rectangle
   label: "Join: top_10_movies & title_principals"
@@ -86,7 +92,6 @@ top_10_movies_with_alternatives: {
 }
 
 # Horizontal Relationships
-direction: right
 title_basics_cleansed_table -> task1.filter_movies: filter
 title_ratings_cleansed_table -> task1.filter_500up: filter
 
@@ -96,8 +101,9 @@ task1.filter_500up -> task1.inner_join: inner join
 task1.inner_join -> task1.ranking: withColumn
 task1.ranking -> top_10_movies: top 10 order_by ranking
 
+# spliting it into copy for display
 # task2a
-top_10_movies -> task2a.join
+top_10_movies_copy -> task2a.join
 title_principals_cleansed_table -> task2a.join
 task2a.join -> task2a.aggregate: groupBy
 task2a.aggregate -> task2a.most_credited: max_by
@@ -105,7 +111,7 @@ task2a.most_credited -> most_credited_person: join with name_basics
 name_basics_cleansed_table -> task2a.most_credited
 
 # task2b
-top_10_movies -> task2b.join
+top_10_movies_copy -> task2b.join
 title_akas_cleansed_table -> task2b.join
 task2b.join -> task2b.aggregate: collect
 task2b.aggregate -> top_10_movies_with_alternatives: result
