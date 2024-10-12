@@ -1,0 +1,114 @@
+direction: right
+
+name_basics_cleansed_table: {
+  shape: cylinder
+  label: "name_basics"
+}
+
+title_akas_cleansed_table: {
+  shape: cylinder
+  label: "title_akas"
+}
+title_ratings_cleansed_table: {
+  shape: cylinder
+  label: "title_ratings"
+}
+
+title_principals_cleansed_table: {
+  shape: cylinder
+  label: "title_principals"
+}
+
+title_basics_cleansed_table: {
+  shape: cylinder
+  label: "title_basics"
+}
+
+task1.filter_movies: {
+  shape: rectangle
+  label: "titleType = 'Movie'"
+}
+
+task1.filter_500up: {
+  shape: rectangle
+  label: "numVotes >= 500"
+}
+
+task1.inner_join: {
+  shape: cylinder
+  label: "Movies Rating 500+"
+}
+
+task1.ranking: {
+  shape: rectangle
+  label: "ranking logic"
+}
+
+top_10_movies: {
+  shape: cylinder
+  label: "Top 10 Movies"
+}
+
+task2a_join: {
+  shape: rectangle
+  label: "Join: top_10_movies & title_principals"
+}
+
+task2a_aggregate: {
+  shape: rectangle
+  label: "Group by nconst"
+}
+
+task2a_most_credited: {
+  shape: rectangle
+  label: "Find most credited"
+}
+
+most_credited_person: {
+  shape: cylinder
+  label: "Most Credited Person"
+}
+
+# Task 2b: Alternative Titles
+task2b_join: {
+  shape: rectangle
+  label: "Join: top_10_movies & title_akas"
+}
+
+task2b_aggregate: {
+  shape: rectangle
+  label: "Collect alternative titles"
+}
+
+top_10_movies_with_alternatives: {
+  shape: cylinder
+  label: "Top 10 Movies with Alternatives"
+}
+
+# Horizontal Relationships
+direction: right
+title_basics_cleansed_table -> task1.filter_movies: filter
+title_ratings_cleansed_table -> task1.filter_500up: filter
+
+task1.filter_movies -> task1.inner_join: inner join
+task1.filter_500up -> task1.inner_join: inner join
+
+task1.inner_join -> task1.ranking: withColumn
+task1.ranking -> top_10_movies: top 10 order_by ranking
+
+top_10_movies -> task2a.join
+title_principals_cleansed_table -> task2a.join
+task2a.join -> task2a.aggregate: groupBy
+task2a.aggregate -> task2a.most_credited: max_by
+task2a.most_credited -> most_credited_person: join with name_basics
+name_basics_cleansed_table -> task2a.most_credited
+
+# task2b
+top_10_movies -> task2b.join
+title_akas_sdf: {
+  shape: cylinder
+  label: "title_akas"
+}
+title_akas_sdf -> task2b.join
+task2b.join -> task2b.aggregate: collect
+task2b.aggregate -> top_10_movies_with_alternatives: result
